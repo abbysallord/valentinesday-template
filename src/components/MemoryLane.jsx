@@ -75,7 +75,7 @@ const MemoryLane = () => {
     }, []);
 
     return (
-        <section ref={containerRef} className="h-screen relative overflow-hidden bg-love-900 flex flex-col justify-center">
+        <section ref={containerRef} className="h-screen relative z-20 overflow-hidden bg-love-900 flex flex-col justify-center">
             <div className="absolute top-10 left-6 md:left-20 z-10 w-full pr-10">
                 <h2 className="text-4xl md:text-7xl font-cursive text-white drop-shadow-md">
                     Our Memories

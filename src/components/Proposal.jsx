@@ -9,9 +9,30 @@ const Proposal = () => {
     const yesBtnRef = useRef(null);
 
     const handleHoverNo = () => {
-        const x = Math.random() * 200 - 100;
-        const y = Math.random() * 200 - 100;
-        setNoBtnPosition({ x, y });
+        // Create a wider range but avoid the center left (where Yes button usually is)
+        // Yes button is to the left. Let's push No button further away or random
+
+        const directions = [
+            { x: Math.random() * 100 + 50, y: Math.random() * 100 - 50 }, // Right
+            { x: Math.random() * 100 - 50, y: Math.random() * 100 + 50 }, // Bottom
+            { x: Math.random() * 100 - 50, y: -(Math.random() * 100 + 50) }, // Top
+        ];
+
+        // Pick a random safe direction
+        const randomDir = directions[Math.floor(Math.random() * directions.length)];
+
+        // Add current position to keep it moving away effectively or reset if too far
+        const newX = noBtnPosition.x + randomDir.x;
+        const newY = noBtnPosition.y + randomDir.y;
+
+        // Constraint to keep it somewhat on screen if needed, but for now just move it
+        // A simple limit to prevent it from disappearing completely
+        // Box is roughly 600px wide. Center is 0.
+        // Tighter constraints to keep it inside the glass panel
+        const constrainedX = Math.min(Math.max(newX, -140), 140);
+        const constrainedY = Math.min(Math.max(newY, -80), 80);
+
+        setNoBtnPosition({ x: constrainedX, y: constrainedY });
     };
 
     const handleAccept = () => {
