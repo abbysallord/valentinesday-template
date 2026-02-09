@@ -1,6 +1,9 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Heart } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
     const containerRef = useRef(null);
@@ -26,6 +29,18 @@ const Hero = () => {
                 "-=0.8"
             );
 
+        // Parallax Effect
+        gsap.to(containerRef.current, {
+            yPercent: 50,
+            ease: "none",
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
     }, []);
 
     return (
@@ -34,7 +49,7 @@ const Hero = () => {
                 <div ref={iconRef} className="mb-6 flex justify-center">
                     <Heart className="w-20 h-20 text-love-500 fill-love-500 animate-pulse-slow drop-shadow-[0_0_15px_rgba(255,0,0,0.5)]" />
                 </div>
-                <h1 ref={titleRef} className="font-cursive text-7xl md:text-9xl text-love-100 mb-4 drop-shadow-lg leading-tight">
+                <h1 ref={titleRef} className="font-cursive text-6xl md:text-9xl text-love-100 mb-4 drop-shadow-lg leading-tight">
                     Happy Valentine's Day
                 </h1>
                 <p ref={subtitleRef} className="text-xl md:text-3xl text-love-200 font-light tracking-wide max-w-2xl mx-auto">
